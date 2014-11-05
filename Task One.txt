@@ -26,3 +26,9 @@ that in the input file.
 * The first, second, third, fifth, etc... byte in the input file is replaced.
 * The fourth, sixth, eighth, etc. byte in the input file is just used directly.
 Your class should be able to encode files in this manner and decode them accordingly.
+
+The faster - the better.
+
+NOTE!
+A file will be no longer than 300kb.
+NOTE!
