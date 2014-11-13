@@ -24,7 +24,7 @@ After you're done with this, you can start creating and editing files in the
 folder that was created by git clone (my folder was named SDA-Tasks).
 
 When you want to upload (commit) your changes to github, do this in the git bash:
-git add . (this adds all files to the commit)
+git add -A (this adds all files to the commit)
 git commit -m "your message about this commit"
 git push
 
