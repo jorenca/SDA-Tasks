@@ -1,3 +1,12 @@
+NOTE! NOTE! NOTE!
+This task description is OUTDATED.
+Reffer to 
+https://github.com/NikolaDimitroff/DSA-Demo-Library/blob/master/homeworks/hw1.md
+for the up-to-date description.
+NOTE! NOTE! NOTE!
+
+
+
 = File Encription =
 
 You are given this interface:
