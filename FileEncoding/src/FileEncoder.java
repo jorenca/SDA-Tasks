@@ -13,7 +13,7 @@ public interface FileEncoder {
 	 * @param outFile - path to the result file
 	 * @param key - list of replacement bytes
 	 */
-	public void encode(String inFile, String outFile, LinkedList<Byte> key);
+	public void encode(String inFile, String outFile, LinkedList<Character> key);
 	
 	/**
 	 * Decodes a file that was encoded with a specified key and saves the result to a given path.
@@ -21,5 +21,5 @@ public interface FileEncoder {
 	 * @param outFile - path to the result file
 	 * @param key - list of replacement bytes that were used to encode the file
 	 */
-	public void devode(String encodedFile, String outFile, LinkedList<Byte> key);
+	public void decode(String encodedFile, String outFile, LinkedList<Character> key);
 }
