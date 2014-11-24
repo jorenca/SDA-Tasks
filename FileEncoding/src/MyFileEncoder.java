@@ -1,26 +1,26 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 public class MyFileEncoder implements FileEncoder61738
 {	
-	public static int AsciiUpperBound = 127;
+	public static int AsciiUpperBound = 256;
 	
 	public static void main(String[] args) throws IOException 
 	{	
 		LinkedList<Character> key = new LinkedList<>();
-	
-		//the program wont work if there are symbols with ascii codes
-		//above 127. This is done so that the encoded file can be viewed with normal
-		//symbols, instead of ????
 		
-		//the key is 127 126 125 124 ... 1 0
+		//the key is 256 255 254 253 ... 1 0
 		for( int i = AsciiUpperBound; i >= 0; i--)
 		{
 			key.add((char)i);
@@ -28,7 +28,7 @@ public class MyFileEncoder implements FileEncoder61738
 		
 		MyFileEncoder enc = new MyFileEncoder();
 
-		File originalFile = new File("files/small.txt");
+		File originalFile = new File("files/code.txt");
 		File encoded 	  = new File("files/encoded.txt");
 		File decoded 	  = new File("files/decoded.txt");
 		
@@ -102,14 +102,13 @@ public class MyFileEncoder implements FileEncoder61738
     		ArrKey.add(myChar);
     	}
     	
-    	BufferedReader inputStream = new BufferedReader(new FileReader(sourceFile));
-		BufferedWriter outputStream = new BufferedWriter(new FileWriter(destinationFile));   
+    	BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile), "UTF8"));
+		BufferedWriter outputStream = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(destinationFile), "UTF8"));   
 			
 		int i = 0;
 		int r = inputStream.read();
 		while(  r != -1 )
 		{	    
-			//skip characters if r is bigger than 127
 			if( r > AsciiUpperBound )
 			{
 				r = inputStream.read();
@@ -151,8 +150,10 @@ public class MyFileEncoder implements FileEncoder61738
     		j++;
     	}
     	
-    	BufferedReader inputStream = new BufferedReader(new FileReader(encodedFile));
-		BufferedWriter outputStream = new BufferedWriter(new FileWriter(destinationFile));
+    	
+    	
+    	BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(encodedFile), "UTF8"));
+		BufferedWriter outputStream = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(destinationFile), "UTF8"));
 
 		int i = 0;
 		int r = inputStream.read();
