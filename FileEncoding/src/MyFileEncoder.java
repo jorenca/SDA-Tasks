@@ -14,14 +14,12 @@ import java.util.LinkedList;
 
 public class MyFileEncoder implements FileEncoder61738
 {	
-	public static int AsciiUpperBound = 256;
-	
 	public static void main(String[] args) throws IOException 
 	{	
 		LinkedList<Character> key = new LinkedList<>();
 		
 		//the key is 256 255 254 253 ... 1 0
-		for( int i = AsciiUpperBound; i >= 0; i--)
+		for( int i = 256; i >= 0; i--)
 		{
 			key.add((char)i);
 		}	
@@ -109,7 +107,7 @@ public class MyFileEncoder implements FileEncoder61738
 		int r = inputStream.read();
 		while(  r != -1 )
 		{	    
-			if( r > AsciiUpperBound )
+			if( r > 256 )
 			{
 				r = inputStream.read();
 				
