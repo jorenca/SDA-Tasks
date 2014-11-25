@@ -66,5 +66,15 @@ public abstract class TestGen
 		
 		end = System.nanoTime();
 		System.out.println(((end - start)/1000000) + "ms");
+		
+		start = System.nanoTime();
+		
+		Collections.shuffle(key); 
+		dumpKey("key4.txt", key);
+		coder.encode("kirilica.txt", "out5.enc", key);
+		coder.decode("out5.enc", "decode5.txt", key);
+		
+		end = System.nanoTime();
+		System.out.println(((end - start)/1000000) + "ms");
 	}
 }
