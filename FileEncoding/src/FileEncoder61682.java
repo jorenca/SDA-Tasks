@@ -26,9 +26,9 @@ public class FileEncoder61682 implements FileEncoder {
         }
     }
 
-    public void encode(String inFile, String destinationFile, LinkedList<Character> key) throws IOException {
+    public void encode(String inFile, String outFile, LinkedList<Character> key) throws IOException {
         FileInputStream inStream = new FileInputStream(inFile);
-        FileOutputStream outStream = new FileOutputStream(destinationFile);
+        FileOutputStream outStream = new FileOutputStream(outFile);
 
         int inByte;
         int count = 0;
@@ -43,9 +43,9 @@ public class FileEncoder61682 implements FileEncoder {
         }
     }
 
-    public void decode(String encodedFile, String destinationFile, LinkedList<Character> key) throws IOException {
+    public void decode(String encodedFile, String outFile, LinkedList<Character> key) throws IOException {
         FileInputStream inStream = new FileInputStream(encodedFile);
-        FileOutputStream outStream = new FileOutputStream(destinationFile);
+        FileOutputStream outStream = new FileOutputStream(outFile);
 
         int inByte;
         int count = 0;
