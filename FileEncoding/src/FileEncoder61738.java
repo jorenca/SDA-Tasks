@@ -1,32 +1,34 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.TreeMap;
+
+/**
+ * 
+ * @author Todor Zhelev
+ *
+ */
 
 public class FileEncoder61738 implements FileEncoder
 {	
-	public static void main(String[] args) throws IOException 
+	public static void main(String[] args)
 	{	
 		LinkedList<Character> key = new LinkedList<>();
 		
-		//the key is 256 255 254 253 ... 1 0
-		for( int i = 256; i >= 0; i--)
+		for( int i = 255; i >= 0; i--)
 		{
 			key.add((char)i);
 		}	
 		
+		Collections.shuffle(key);
 		FileEncoder61738 enc = new FileEncoder61738();
 
-		File originalFile = new File("files/code.txt");
+		File originalFile = new File("files/in1.jpg");
 		File encoded 	  = new File("files/encoded.txt");
-		File decoded 	  = new File("files/decoded.txt");
+		File decoded 	  = new File("files/decoded.jpg");
 		
 		   
 		long start = System.currentTimeMillis();
@@ -88,94 +90,119 @@ public class FileEncoder61738 implements FileEncoder
 	}
 	
 	
-    public void encode(String sourceFile, String destinationFile, LinkedList<Character> key) throws IOException
+    public void encode(String sourceFile, String destinationFile, LinkedList<Character> key)
     {
-    	ArrayList<Character> ArrKey = new ArrayList<>();
-    	
-    	//copy the key into array so we can access the elements faster
-    	for( Character myChar : key )
+    	try
     	{
-    		ArrKey.add(myChar);
-    	}
-    	
-    	BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile), "UTF8"));
-		BufferedWriter outputStream = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(destinationFile), "UTF8"));   
+	    	 FileInputStream inputStream 	=  new FileInputStream(sourceFile);
+	         FileOutputStream outputStream 	=  new FileOutputStream(destinationFile);
+	         
+	        TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
+	    	
+	    	//copy the elements into tree map, so we can access the key faster
+	        //keys are in the range [-128,127] and the values are the elements of the passed key
+	        //the range is such, because the bytes are in range [-128,127]
+	        //and i want directly to get the value of the map for this key
+	        //based on the value of the byte 
+	        
+	    	int k = -128;
+	    	for( Character myChar : key )
+	    	{
+	    		map.put(k, (int)myChar);
+	    		k++;
+	    	}
+	    	
+	    	File source = new File(sourceFile);
+	    	
+	    	byte[] buffer = new byte[(int)source.length()];
+		
+			int numberOfBytes = inputStream.read(buffer);
 			
-		int i = 0;
-		int r = inputStream.read();
-		while(  r != -1 )
-		{	    
-			if( r > 256 )
-			{
-				r = inputStream.read();
-				
-				continue;
+			if( numberOfBytes != -1)
+			{	    
+				for( int i = 0; i < numberOfBytes; i++)
+				{
+		    		if( IsPrime(i) )
+		    		{
+						outputStream.write(buffer[i]);
+		    		}
+		    		else
+		    		{		
+		    			int key1 = buffer[i];
+		    			int valueMap = map.get(key1);
+		    			char symbolMap = (char) (valueMap);
+						outputStream.write(symbolMap);
+		    		}
+				}
 			}
 			
-    		Character symbol = (char)r;
+			inputStream.close();
+			outputStream.close();
 			
-    		if( IsPrime(i) || i == 1 )
-    		{
-				outputStream.write(symbol);
-    		}
-    		else
-    		{		
-    			Character keySymbol = ArrKey.get(r);
-				outputStream.write(keySymbol);
-    		}
-    		
-    		i++;
-    		
-    		r = inputStream.read();
-		}
-		
-		inputStream.close();
-		outputStream.close();
+    	}
+    	catch(IOException e)
+    	{
+    		e.printStackTrace();
+    	}
     }
     
-    public void decode(String encodedFile, String destinationFile, LinkedList<Character> key) throws IOException
+    public void decode(String encodedFile, String destinationFile, LinkedList<Character> key)
     {
-    	HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-    	
-    	//copy the elements into hash map, so we can access it faster
-    	//also use the original keys as key and the index of the key as value
-    	int j = 0;
-    	for( Character myChar : key )
+    	try
     	{
-    		map.put((int) myChar, j);
-    		j++;
-    	}
-    	
-    	
-    	
-    	BufferedReader inputStream = new BufferedReader(new InputStreamReader(new FileInputStream(encodedFile), "UTF8"));
-		BufferedWriter outputStream = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(destinationFile), "UTF8"));
-
-		int i = 0;
-		int r = inputStream.read();
-		while(  r != -1 )
-		{	    		
-    		boolean bIsPrime = IsPrime(i);
-
-    		Character symbol = (char)r;
+	        FileInputStream inputStream 	=  new FileInputStream(encodedFile);
+	        FileOutputStream outputStream 	=  new FileOutputStream(destinationFile);
+	        
+	    	TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
+	    	
+	    	//copy the elements into tree map, so we can access it faster
+	    	//also use the original keys as key and the index of the key as value
+	    	int k = -128;
+	    	for( Character myChar : key )
+	    	{
+	    		map.put((int) myChar, k);
+	    		k++;
+	    	}
+	    	
+	    	File encoded = new File(encodedFile);
+	    	
+	    	byte[] buffer = new byte[(int)encoded.length()];
+	
+			int numberOfBytes = inputStream.read(buffer);
+			if( numberOfBytes != -1)
+			{	    
+				for( int i = 0; i < numberOfBytes; i++)
+				{		
+		    		if( IsPrime(i) )
+		    		{
+						outputStream.write(buffer[i]);
+		    		}
+		    		else
+		    		{		
+		    			int sum = 0;
+		    			
+		    			//i noticed that for the bytes with negative values
+		    			//256 must be added, so that the original value can be obtained
+		    			if( buffer[i] < 0 )
+		    			{
+		    				sum = 256;
+		    			}
+		    			
+		    			int key1 = buffer[i]+sum;
+		    			int valueMap = map.get(key1);
+		    			char symbolMap = (char) (valueMap );
+		    			
+						outputStream.write(symbolMap);
+		    		}
+				}
+			}
 			
-    		if( bIsPrime || i == 1 )
-    		{
-				outputStream.write(symbol);
-    		}
-    		else
-    		{			
-    			Character originalSymbol = (char) map.get(r).byteValue();
-
-				outputStream.write(originalSymbol);
-    		}
-    		i++;
-    		
-    		r = inputStream.read();
-		}
-		
-		inputStream.close();
-    	outputStream.close();
+			inputStream.close();
+			outputStream.close();
+	    }
+    	catch(IOException e)
+    	{
+    		e.printStackTrace();
+    	}
     }
-
 }
