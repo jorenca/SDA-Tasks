@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.LinkedList;
 
 /**
@@ -13,7 +12,6 @@ public interface FileEncoder {
 	 * @param inFile - path to the initial file
 	 * @param outFile - path to the result file
 	 * @param key - list of replacement bytes
-	 * @throws IOException 
 	 */
 	public void encode(String inFile, String outFile, LinkedList<Character> key);
 	
@@ -22,7 +20,6 @@ public interface FileEncoder {
 	 * @param encodedFile - path to encoded file
 	 * @param outFile - path to the result file
 	 * @param key - list of replacement bytes that were used to encode the file
-	 * @throws IOException 
 	 */
 	public void decode(String encodedFile, String outFile, LinkedList<Character> key);
 }
