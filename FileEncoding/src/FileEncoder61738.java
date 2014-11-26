@@ -26,9 +26,9 @@ public class FileEncoder61738 implements FileEncoder
 		Collections.shuffle(key);
 		FileEncoder61738 enc = new FileEncoder61738();
 
-		File originalFile = new File("files/in1.jpg");
+		File originalFile = new File("files/in4.pdf");
 		File encoded 	  = new File("files/encoded.txt");
-		File decoded 	  = new File("files/decoded.jpg");
+		File decoded 	  = new File("files/decoded.pdf");
 		
 		   
 		long start = System.currentTimeMillis();
@@ -155,8 +155,9 @@ public class FileEncoder61738 implements FileEncoder
 	        
 	    	TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
 	    	
-	    	//copy the elements into tree map, so we can access it faster
-	    	//also use the original keys as key and the index of the key as value
+	    	//copy the elements of the key into tree map for faster access
+	    	//the key in the map will be the elements in the key and the values of the map will be 
+	    	// in the range [-128,127] - the opposite than the encode
 	    	int k = -128;
 	    	for( Character myChar : key )
 	    	{
@@ -181,14 +182,21 @@ public class FileEncoder61738 implements FileEncoder
 		    		{		
 		    			int sum = 0;
 		    			
-		    			//i noticed that for the bytes with negative values
-		    			//256 must be added, so that the original value can be obtained
+		    			// imagine that we want to encode 1. The code of 1 is 49.
+		    			// also let the value which corresponds to 49 in the key is 164.
+		    			// then in the encoded file we have to write 164.
+		    			// after we read the encoded file, though, 164 is transformed into -92
+		    			// which is with 256 less. So to recover the original value, which is 164
+		    			// i just add 256. Note that this happens only when the byte is encoded 
+		    			// and when the byte is negative ( when we read the encoded file )
+		    			
 		    			if( buffer[i] < 0 )
 		    			{
 		    				sum = 256;
 		    			}
 		    			
 		    			int key1 = buffer[i]+sum;
+		    			
 		    			int valueMap = map.get(key1);
 		    			char symbolMap = (char) (valueMap );
 		    			
