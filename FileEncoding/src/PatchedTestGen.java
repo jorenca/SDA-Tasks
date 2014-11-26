@@ -5,10 +5,10 @@ import java.io.*;
 
 /**
  * 
- * @author Georgi Gaydarov
+ * @author Martin Hristov
  *
  */
-public abstract class TestGen 
+public abstract class PatchedTestGen 
 {
 	private static void dumpKey(String where, List<Character> key) throws Exception
 	{
