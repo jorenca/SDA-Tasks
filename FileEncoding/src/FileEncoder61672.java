@@ -6,7 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 
-public class FileEncoder61672 implements FileEncoderFN{
+/**
+ * 
+ * @author Borislav Kamenov
+ *
+ */
+
+public class FileEncoder61672 implements FileEncoder{
 
 	@Override
 	public void encode(String sourceFile, String destinationFile,
