@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-
+/**
+ * 
+ * @author Kancho Kanev
+ *
+ */
 public class FileEncoder61692 implements FileEncoder{
 	
 	public boolean isPrime(int number){
