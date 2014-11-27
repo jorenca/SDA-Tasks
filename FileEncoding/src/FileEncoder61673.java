@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 
-public class FileEncoder61673 {
+public class FileEncoder61673 implements FileEncoder {
 		private ArrayList<Boolean> eraList = new ArrayList<Boolean>();
 		
 		FileEncoder61673()
