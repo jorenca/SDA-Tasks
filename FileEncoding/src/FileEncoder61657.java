@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 public class FileEncoder {
 	ArrayList<Boolean> primes = new ArrayList<Boolean>();
-	FileEncoder61657 ()
+	FileEncoder ()
 	{
 		for (int i = 0; i < 300000; i++) 
 		{
