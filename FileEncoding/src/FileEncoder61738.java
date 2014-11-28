@@ -1,3 +1,5 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,6 +11,8 @@ import java.util.TreeMap;
 /**
  * 
  * @author Todor Zhelev
+ * 
+ * GitHub: http://goo.gl/qEmsEU
  *
  */
 
@@ -18,12 +22,13 @@ public class FileEncoder61738 implements FileEncoder
 	{	
 		LinkedList<Character> key = new LinkedList<>();
 		
-		for( int i = 255; i >= 0; i--)
+		for(int i=0; i<256; i++)
 		{
 			key.add((char)i);
-		}	
+		}
 		
 		Collections.shuffle(key);
+		
 		FileEncoder61738 enc = new FileEncoder61738();
 
 		File originalFile = new File("files/in4.pdf");
@@ -94,8 +99,8 @@ public class FileEncoder61738 implements FileEncoder
     {
     	try
     	{
-	    	 FileInputStream inputStream 	=  new FileInputStream(sourceFile);
-	         FileOutputStream outputStream 	=  new FileOutputStream(destinationFile);
+    		BufferedInputStream inputStream   = new BufferedInputStream(new FileInputStream(sourceFile));
+    		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile));
 	         
 	        TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
 	    	
@@ -149,9 +154,9 @@ public class FileEncoder61738 implements FileEncoder
     public void decode(String encodedFile, String destinationFile, LinkedList<Character> key)
     {
     	try
-    	{
-	        FileInputStream inputStream 	=  new FileInputStream(encodedFile);
-	        FileOutputStream outputStream 	=  new FileOutputStream(destinationFile);
+    	{	
+    		BufferedInputStream inputStream   = new BufferedInputStream(new FileInputStream(encodedFile));
+    		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile));
 	        
 	    	TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
 	    	
