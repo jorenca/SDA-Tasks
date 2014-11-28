@@ -1,6 +1,7 @@
 package main;
 
 import java.util.LinkedList;
+import java.util.HashSet;
 import java.io.IOException;
 import java.io.FileOutputStream;
 import java.nio.file.FileSystems;
@@ -10,11 +11,12 @@ import java.nio.file.Path;
 import contracts.FileEncoder61712;
 //import helpers.PrimeGenerator;
 
-public class FileEncoder implements FileEncoder61712 {
+public class FileEncoder61712 implements FileEncoder {
 	private static final String DECODE_OP = "decode";
 	private static final String ENCODE_OP = "encode";
+	private static final int PRIME_NUMS_COUNT = 260;
 	
-	private LinkedList<Integer> primeNumbers;
+	private HashSet<Integer> primeNumbers;
 	private String sourceFilePath;
 	private String destinationFilePath;
 	private LinkedList<Character> keys;
@@ -108,8 +110,8 @@ public class FileEncoder implements FileEncoder61712 {
 public class PrimeGenerator {
 	private static final int ONE = 1;
 	
-	public static LinkedList<Integer> generateNumbers(int count) {
-		LinkedList<Integer> numbers = new LinkedList<Integer>();
+	public static HashSet<Integer> generateNumbers(int count) {
+		HashSet<Integer> numbers = new HashSet<Integer>();
 		int counter = 0;
 		
 		// Adding the special case
