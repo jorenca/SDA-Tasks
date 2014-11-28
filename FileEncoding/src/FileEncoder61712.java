@@ -8,7 +8,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import contracts.FileEncoder61712;
+import contracts.FileEncoder;
 //import helpers.PrimeGenerator;
 
 public class FileEncoder61712 implements FileEncoder {
