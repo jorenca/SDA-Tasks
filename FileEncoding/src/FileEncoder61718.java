@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fileencoder;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
+ * 
  * @author Alex Kushev
  */
 public class FileEncoder61718 implements FileEncoder {
@@ -40,12 +39,11 @@ public class FileEncoder61718 implements FileEncoder {
     public void encode(String inFile, String outFile, LinkedList<Character> key) {
 
         List<Character> keysContainer = new ArrayList<>(key);
-        /* we will use data structure ArrayList because
-         the complexity of method get is 0(1);
+        /*
+         * we will use data structure ArrayList because the complexity of method get is 0(1);
          */
 
-        try (FileInputStream in = new FileInputStream(inFile);
-                FileOutputStream out = new FileOutputStream(outFile)) {
+        try (FileInputStream in = new FileInputStream(inFile); FileOutputStream out = new FileOutputStream(outFile)) {
 
             int curChar = 0;
             int indexCounter = 0;
@@ -66,6 +64,7 @@ public class FileEncoder61718 implements FileEncoder {
 
     }
 
+    @Override
     public void decode(String encodedFile, String outFile, LinkedList<Character> key) {
 
         List<Character> keyContainer = new ArrayList<>(key);
