@@ -42,7 +42,7 @@ public class FileEncoder61668 implements FileEncoder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("EncodingDone");
+        // System.out.println("EncodingDone");
     }
 
     @Override

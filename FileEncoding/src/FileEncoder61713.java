@@ -2,90 +2,130 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
  * 
- * @author Jivko Todorov
+ * @author Jivko Todorov 0.0113 za 1000 testa
  * 
  */
 public class FileEncoder61713 implements FileEncoder {
-    boolean[] primes = new boolean[307200];
+
+    private final static int MAX_NUMBER = 307200;
+
+    private static boolean[] primes = new boolean[MAX_NUMBER];
 
     public FileEncoder61713() {
-        fillSieve();
+        getPrimeNums();
+
     }
 
-    public void fillSieve() {
+    private void getPrimeNums() {
         Arrays.fill(primes, true);
         primes[0] = false;
         primes[1] = true;
-        for (int i = 2; i < primes.length; i++) {
+        int rootMP = (int) Math.floor(Math.sqrt(MAX_NUMBER));
+        int halfMax = MAX_NUMBER / 2;
+
+        for (int i = 3; i <= rootMP;) {
+            for (int j = ((i * 3) / 2); j <= halfMax; j += i) {
+                primes[j] = false;
+            }
+            i += 2;
+            int k = i / 2;
+            while (primes[k] == false) {
+                k++;
+            }
+            i = (k * 2) + 1;
+        }
+
+        for (int i = 0; i <= halfMax; i++) {
             if (primes[i]) {
-                for (int j = 2; i * j < primes.length; j++) {
-                    primes[i * j] = false;
-                }
+                primes[i] = isPrimeNumber((i * 2) + 1);
             }
         }
     }
 
-    public boolean isPrime(int n) {
+    private boolean isPrimeNumber(int n) {
+        if (n == 0) {
+            return false;
+        }
+        if (n == 2) {
+            return true;
+        }
+        if (n % 2 == 0) {
+            return false;
+        }
+        for (int i = 3; i * i <= n; i += 2) {
+            if (n % i == 0)
+                return false;
+        }
+        return true;
+    }
+
+    private static boolean isPrime(int n) {
         return primes[n];
     }
 
     @Override
     public void encode(String sourceFile, String destinationFile, LinkedList<Character> key) {
+        ArrayList<Character> arrayKey = new ArrayList<>(key);
 
         try {
-            BufferedInputStream input = new BufferedInputStream(new FileInputStream(sourceFile));
-            BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(destinationFile));
+            BufferedInputStream inputFileStream = new BufferedInputStream(new FileInputStream(sourceFile));
+            BufferedOutputStream outputFileStream = new BufferedOutputStream(new FileOutputStream(destinationFile));
 
             int counter = 0;
             int currentByte;
 
-            while ((currentByte = input.read()) != -1) {
-                if (isPrime(counter)) {
+            while ((currentByte = inputFileStream.read()) != -1) {
 
-                    output.write(currentByte);
+                if (this.isPrime(counter)) {
+                    outputFileStream.write(currentByte);
                 } else {
-                    output.write(key.get(currentByte));
+                    outputFileStream.write(arrayKey.get(currentByte));
                 }
 
                 counter++;
+
             }
-            input.close();
-            output.close();
+
+            inputFileStream.close();
+            outputFileStream.close();
 
         } catch (Exception e) {
-            System.out.println("An error occured during encoding the file !");
+            e.printStackTrace();
         }
-
     }
 
     @Override
     public void decode(String encodedFile, String destinationFile, LinkedList<Character> key) {
-
+        HashMap<Character, Integer> hashKey = new HashMap<>();
+        for (int i = 0; i < key.size(); i++) {
+            hashKey.put(key.get(i), i);
+        }
         try {
-            BufferedInputStream input = new BufferedInputStream(new FileInputStream(encodedFile));
-            BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(destinationFile));
+            BufferedInputStream inputFileStream = new BufferedInputStream(new FileInputStream(encodedFile));
+            BufferedOutputStream outputFileStream = new BufferedOutputStream(new FileOutputStream(destinationFile));
 
             int counter = 0;
             int currentByte;
 
-            while ((currentByte = input.read()) != -1) {
-                if (isPrime(counter)) {
-                    output.write(currentByte);
+            while ((currentByte = inputFileStream.read()) != -1) {
+                if (this.isPrime(counter)) {
+                    outputFileStream.write(currentByte);
                 } else {
-                    output.write(key.indexOf((char) currentByte));
+                    outputFileStream.write(hashKey.get((char) currentByte));
                 }
                 counter++;
             }
-            input.close();
-            output.close();
+            inputFileStream.close();
+            outputFileStream.close();
         } catch (Exception e) {
-            System.out.println("An error occured during decoding the file !");
+            e.printStackTrace();
         }
     }
-
 }

@@ -41,6 +41,9 @@ public class FileEncoder61682 implements FileEncoder {
                 }
                 count++;
             }
+
+            inStream.close();
+            outStream.close();
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -63,6 +66,9 @@ public class FileEncoder61682 implements FileEncoder {
                 }
                 count++;
             }
+
+            inStream.close();
+            outStream.close();
         } catch (Throwable t) {
             t.printStackTrace();
         }

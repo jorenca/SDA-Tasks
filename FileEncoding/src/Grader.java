@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 
+ * @author georgi.gaydarov
+ * 
+ */
 public class Grader {
     private FileEncoder authorEncoder;
 
