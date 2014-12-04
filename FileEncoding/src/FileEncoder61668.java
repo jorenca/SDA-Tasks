@@ -74,7 +74,7 @@ public class FileEncoder61668 implements FileEncoder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("DecodingDone");
+        // System.out.println("DecodingDone");
     }
 
     static boolean primes[] = new boolean[1000000]; // Масив, който приема стойност true

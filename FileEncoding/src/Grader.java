@@ -2,6 +2,9 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +36,7 @@ public class Grader {
                 Matcher matcher = homeworkPattern.matcher(fileName);
                 if (matcher.find()) {
                     String className = fileName.replaceFirst(".java", "");
-                    System.out.println("Adding class " + className);
+                    System.out.println("Adding class " + className + " for grading.");
                     result.add((Class<? extends FileEncoder>) Class.forName(className));
                 }
             }
@@ -58,46 +61,95 @@ public class Grader {
         authorEncoder = new AuthorEncoder();
     }
 
-    public List<Double> gradeAllAgainst(String inFile, LinkedList<Character> key) throws Exception {
+    public List<Double> gradeAllAgainst(String inFile, LinkedList<Character> key, boolean encodingTask)
+        throws Exception {
         String authorOutFile = "authorOut.enc";
         String gradedOutFile = "out.enc";
 
         long authorStart = System.nanoTime();
-        authorEncoder.encode(inFile, authorOutFile, key);
+        if (encodingTask) {
+            authorEncoder.encode(inFile, authorOutFile, key);
+        } else {
+            authorEncoder.encode(inFile, authorOutFile, key);
+        }
         long authorEnd = System.nanoTime();
         long authorTime = authorEnd - authorStart;
-        System.out.println("Author result: " + authorTime + "ns");
+        System.out.println("Author result: " + Math.round(authorTime / 100000.0) + "ms");
 
         List<Double> results = new LinkedList<Double>();
         for (FileEncoder work : instancesToBeGraded) {
-            long workStart = System.nanoTime();
-            work.encode(inFile, gradedOutFile, key);
-            long workEnd = System.nanoTime();
-            long workTime = workEnd - workStart;
+            long workTime;
+            try {
+                long workStart = System.nanoTime();
+                if (encodingTask) {
+                    work.encode(inFile, gradedOutFile, key);
+                } else {
+                    work.decode(inFile, gradedOutFile, key);
+                }
+                long workEnd = System.nanoTime();
+                workTime = workEnd - workStart;
+            } catch (Throwable t) {
+                workTime = -1;
+            }
 
-            boolean correct = readAndCompareFiles(gradedOutFile, authorOutFile);
             System.out.print(work.getClass().getName() + " result: ");
-            if (correct) {
-                results.add(((double) authorTime) / workTime);
-                System.out.println(((double) authorTime) / workTime + " (time " + workTime + "ns)");
+            if (workTime != -1) {
+                boolean correct = readAndCompareFiles(gradedOutFile, authorOutFile);
+                if (correct) {
+                    DecimalFormat df = new DecimalFormat("#.#####");
+                    df.setRoundingMode(RoundingMode.HALF_UP);
+                    double workTimeResultFraction = ((double) authorTime) / workTime;
+                    results.add(workTimeResultFraction);
+                    System.out.println(df.format(workTimeResultFraction) + " (time " + Math.round(workTime / 100000.0)
+                            + "ms)");
+                } else {
+                    results.add(0.0);
+                    System.out.println("Incorrect.");
+                }
             } else {
                 results.add(0.0);
-                System.out.println("Incorrect.");
+                System.out.println("Threw an exception.");
             }
+
         }
 
         return results;
     }
 
     public static void main(String[] args) throws Exception {
-        // WORK IN PROGRESS
         Grader grader = new Grader();
 
-        LinkedList<Character> key = generateRandomKey();
-        List<Double> results = grader.gradeAllAgainst("in2.RAR", key);
+        List<List<Double>> allResults = new ArrayList<List<Double>>(10);
 
-        for (int i = 0; i < results.size(); i++) {
-            // System.out.println(classesToBeGraded.get(i).getName() + ": score " + results.get(i));
+        LinkedList<Character> key = generateRandomKey();
+        System.out.println("\n\n=== Encoding in1.jpg ===");
+        List<Double> result1 = grader.gradeAllAgainst("in1.jpg", key, true);
+        System.out.println("\n\n=== Decoding in1.jpg ===");
+        List<Double> result2 = grader.gradeAllAgainst("authorOut.enc", key, false);
+
+        key = generateRandomKey();
+        System.out.println("\n\n=== Encoding in5.jpg ===");
+        List<Double> result3 = grader.gradeAllAgainst("in5.jpg", key, true);
+
+        allResults.add(result1);
+        allResults.add(result2);
+        allResults.add(result3);
+
+        double finalResults[] = new double[classesToBeGraded.size()];
+
+        for (List<Double> allResultsFromTest : allResults) {
+            for (int i = 0; i < allResultsFromTest.size(); i++) {
+                finalResults[i] += allResultsFromTest.get(i);
+            }
+        }
+
+        DecimalFormat df = new DecimalFormat("#.#####");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        System.out.println("\n\n\n=== FINAL RESULTS ===");
+        for (int i = 0; i < finalResults.length; i++) {
+            finalResults[i] /= allResults.size();
+
+            System.out.println(classesToBeGraded.get(i).getName() + ": " + df.format(finalResults[i]));
         }
 
     }
