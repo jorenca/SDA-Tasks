@@ -66,45 +66,54 @@ public class Grader {
         String authorOutFile = "authorOut.enc";
         String gradedOutFile = "out.enc";
 
-        long authorStart = System.nanoTime();
-        if (encodingTask) {
-            authorEncoder.encode(inFile, authorOutFile, key);
-        } else {
-            authorEncoder.encode(inFile, authorOutFile, key);
-        }
-        long authorEnd = System.nanoTime();
-        long authorTime = authorEnd - authorStart;
-        System.out.println("Author result: " + Math.round(authorTime / 100000.0) + "ms");
+        File aoutf = new File(gradedOutFile);
+    	aoutf.delete();
+    	long authorTime=0;
+    	try {
+        	long authorStart = System.nanoTime();
+        	if (encodingTask) {
+            	authorEncoder.encode(inFile, authorOutFile, key);
+        	} else {
+            	authorEncoder.decode(inFile, authorOutFile, key);
+        	} 
+        	authorTime = System.nanoTime() - authorStart;
+    	} catch (Throwable t) {}
+        System.out.println("Author result: " + Math.round(authorTime / 1000000.0) + "ms");
 
+        
         List<Double> results = new LinkedList<Double>();
         for (FileEncoder work : instancesToBeGraded) {
-            long workTime;
+        	File outf = new File(gradedOutFile);
+        	outf.delete();
+            
+        	long workTime = 0;
             try {
                 long workStart = System.nanoTime();
                 if (encodingTask) {
                     work.encode(inFile, gradedOutFile, key);
                 } else {
                     work.decode(inFile, gradedOutFile, key);
-                }
-                long workEnd = System.nanoTime();
-                workTime = workEnd - workStart;
+                } 
+                workTime = System.nanoTime() - workStart;
             } catch (Throwable t) {
                 workTime = -1;
             }
 
+            
             System.out.print(work.getClass().getName() + " result: ");
-            if (workTime != -1) {
+            if (workTime > 0) {
                 boolean correct = readAndCompareFiles(gradedOutFile, authorOutFile);
                 if (correct) {
                     DecimalFormat df = new DecimalFormat("#.#####");
                     df.setRoundingMode(RoundingMode.HALF_UP);
                     double workTimeResultFraction = ((double) authorTime) / workTime;
                     results.add(workTimeResultFraction);
-                    System.out.println(df.format(workTimeResultFraction) + " (time " + Math.round(workTime / 100000.0)
+                    System.out.println(df.format(workTimeResultFraction) + " (time " + Math.round(workTime / 1000000.0)
                             + "ms)");
                 } else {
                     results.add(0.0);
-                    System.out.println("Incorrect.");
+                    System.out.println("Incorrect. (time " + Math.round(workTime / 1000000.0)
+                            + "ms)");
                 }
             } else {
                 results.add(0.0);
@@ -124,8 +133,10 @@ public class Grader {
         LinkedList<Character> key = generateRandomKey();
         System.out.println("\n\n=== Encoding in1.jpg ===");
         List<Double> result1 = grader.gradeAllAgainst("in1.jpg", key, true);
+        File enc = new File("authorOut.enc");
+        enc.renameTo(new File("encoded.enc"));
         System.out.println("\n\n=== Decoding in1.jpg ===");
-        List<Double> result2 = grader.gradeAllAgainst("authorOut.enc", key, false);
+        List<Double> result2 = grader.gradeAllAgainst("encoded.enc", key, false);
 
         key = generateRandomKey();
         System.out.println("\n\n=== Encoding in5.jpg ===");
@@ -176,8 +187,7 @@ public class Grader {
         InputStream expected = null;
         try {
             current = new BufferedInputStream(new FileInputStream(pathToCurrentFile));
-            expected = new BufferedInputStream(new FileInputStream(pathToExpectedFile));
-
+            expected = new BufferedInputStream(new FileInputStream(pathToExpectedFile)); 
             int currentChar;
             int expectedChar;
             while ((currentChar = current.read()) != -1 && (expectedChar = expected.read()) != -1) {
@@ -186,6 +196,7 @@ public class Grader {
                     return false;
                 }
             }
+            if(current.read() != expected.read()) return false;
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
