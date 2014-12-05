@@ -102,44 +102,34 @@ public class FileEncoder61738 implements FileEncoder
     		BufferedInputStream inputStream   = new BufferedInputStream(new FileInputStream(sourceFile));
     		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile));
 	         
-	        TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
-	    	
-	    	//copy the elements into tree map, so we can access the key faster
-	        //keys are in the range [-128,127] and the values are the elements of the passed key
-	        //the range is such, because the bytes are in range [-128,127]
-	        //and i want directly to get the value of the map for this key
-	        //based on the value of the byte 
-	        
-	    	int k = -128;
+	        TreeMap<Integer, Character> map = new TreeMap<Integer, Character>();
+	              	
+	    	int k = 0;
 	    	for( Character myChar : key )
 	    	{
-	    		map.put(k, (int)myChar);
+	    		map.put(k, myChar);
 	    		k++;
 	    	}
+	        
+	    	int r;
+	    	int i = 0;
 	    	
-	    	File source = new File(sourceFile);
-	    	
-	    	byte[] buffer = new byte[(int)source.length()];
-		
-			int numberOfBytes = inputStream.read(buffer);
-			
-			if( numberOfBytes != -1)
-			{	    
-				for( int i = 0; i < numberOfBytes; i++)
-				{
-		    		if( IsPrime(i) )
-		    		{
-						outputStream.write(buffer[i]);
-		    		}
-		    		else
-		    		{		
-		    			int key1 = buffer[i];
-		    			int valueMap = map.get(key1);
-		    			char symbolMap = (char) (valueMap);
-						outputStream.write(symbolMap);
-		    		}
-				}
-			}
+	    	while( (r = inputStream.read()) >= 0)
+	    	{
+	    		char symbol = (char) r;
+	    		
+	    		if( IsPrime(i) )
+	    		{
+					outputStream.write(symbol);
+	    		}
+	    		else
+	    		{		
+	    			char symbolMap = (char) map.get((int)symbol);
+					outputStream.write(symbolMap);
+	    		}
+	    		
+	    		i++;
+	    	}   
 			
 			inputStream.close();
 			outputStream.close();
@@ -157,59 +147,36 @@ public class FileEncoder61738 implements FileEncoder
     	{	
     		BufferedInputStream inputStream   = new BufferedInputStream(new FileInputStream(encodedFile));
     		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(destinationFile));
-	        
-	    	TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
-	    	
-	    	//copy the elements of the key into tree map for faster access
-	    	//the key in the map will be the elements in the key and the values of the map will be 
-	    	// in the range [-128,127] - the opposite than the encode
-	    	int k = -128;
+	
+	    	TreeMap<Character, Character> map = new TreeMap<Character, Character>();
+          	
+	    	int k = 0;
 	    	for( Character myChar : key )
 	    	{
-	    		map.put((int) myChar, k);
+	    		map.put(myChar, (char) k);
 	    		k++;
 	    	}
+	        
+	    	int r;
+	    	int i = 0;
 	    	
-	    	File encoded = new File(encodedFile);
+	    	while( (r = inputStream.read()) >= 0)
+	    	{
+	    		char symbol = (char) r;
+	    		
+	    		if( IsPrime(i) )
+	    		{
+					outputStream.write(symbol);
+	    		}
+	    		else
+	    		{		
+	    			char symbolMap = (char) map.get(symbol);
+					outputStream.write(symbolMap);
+	    		}
+	    		
+	    		i++;
+	    	}   
 	    	
-	    	byte[] buffer = new byte[(int)encoded.length()];
-	
-			int numberOfBytes = inputStream.read(buffer);
-			if( numberOfBytes != -1)
-			{	    
-				for( int i = 0; i < numberOfBytes; i++)
-				{		
-		    		if( IsPrime(i) )
-		    		{
-						outputStream.write(buffer[i]);
-		    		}
-		    		else
-		    		{		
-		    			int sum = 0;
-		    			
-		    			// imagine that we want to encode 1. The code of 1 is 49.
-		    			// also let the value which corresponds to 49 in the key is 164.
-		    			// then in the encoded file we have to write 164.
-		    			// after we read the encoded file, though, 164 is transformed into -92
-		    			// which is with 256 less. So to recover the original value, which is 164
-		    			// i just add 256. Note that this happens only when the byte is encoded 
-		    			// and when the byte is negative ( when we read the encoded file )
-		    			
-		    			if( buffer[i] < 0 )
-		    			{
-		    				sum = 256;
-		    			}
-		    			
-		    			int key1 = buffer[i]+sum;
-		    			
-		    			int valueMap = map.get(key1);
-		    			char symbolMap = (char) (valueMap );
-		    			
-						outputStream.write(symbolMap);
-		    		}
-				}
-			}
-			
 			inputStream.close();
 			outputStream.close();
 	    }
