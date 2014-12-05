@@ -31,7 +31,7 @@ public class FileEncoder61677 implements FileEncoder {
 
 			while((position = inFile.read()) != -1) {
 				if (isPrime(counter)  || counter == 1) {
-					outFile.write(position);
+					outFile.write((char)position);
 				} else {
 					outFile.write(key.get((char)position));
 				}
