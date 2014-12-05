@@ -8,8 +8,8 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 
 public class FileEncoder61677 implements FileEncoder {
-	
-	 
+
+
 	public void encode(String sourceFile, String destinationFile,LinkedList<Character> key) {
 		int position;
 		int counter = 0;
@@ -24,29 +24,29 @@ public class FileEncoder61677 implements FileEncoder {
 			outStream = new FileOutputStream(destinationFile);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} 
+		}
 		try {
 			BufferedInputStream inFile = new BufferedInputStream(inpStream);
 			BufferedOutputStream outFile = new BufferedOutputStream(outStream);
-			
+
 			while((position = inFile.read()) != -1) {
 				if (isPrime(counter)  || counter == 1) {
 					outFile.write(position);
 				} else {
-					outFile.write(key.get(position)); 
+					outFile.write(key.get((char)position));
 				}
 				counter++;
 			}
-			
+
 			inFile.close();
 	    	outFile.close();
-	    	
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void decode(String encodedFile, String destinationFile,LinkedList<Character> key) {
@@ -63,14 +63,14 @@ public class FileEncoder61677 implements FileEncoder {
 			outStream = new FileOutputStream(destinationFile);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} 
+		}
 		try {
 			BufferedInputStream inFile = new BufferedInputStream(inpStream);
 			BufferedOutputStream outFile = new BufferedOutputStream(outStream);
-            
-			
+
+
 			while((position = inFile.read()) != -1) {
-				
+
 				if (isPrime(counter) || counter == 1) {
 					outFile.write(position);
 				} else {
@@ -78,18 +78,18 @@ public class FileEncoder61677 implements FileEncoder {
 				}
 			counter ++;
 			}
-			
+
 			inFile.close();
 	    	outFile.close();
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private boolean isPrime(int number) {
 
 		boolean primeNumber=false;
