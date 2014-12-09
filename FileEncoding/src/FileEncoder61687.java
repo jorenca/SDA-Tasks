@@ -1,9 +1,11 @@
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedList;
 
 
@@ -14,7 +16,7 @@ public class FileEncoder61687 implements FileEncoder{
 		int b;
 		int mask = 0;
 		
-		try {
+		try{
 			BufferedInputStream input = new BufferedInputStream(new FileInputStream(sourceFile));
 			BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(destinationFile));
 			
@@ -70,11 +72,19 @@ public class FileEncoder61687 implements FileEncoder{
 	}
 	
 	private static boolean isPrime(int number) {
-    	for (int i = 1; i < Math.sqrt(number); i += 2) {
-        	if (number % i == 0) {
-            	return false;
-        	}
-    	}
-    	return true;
+		if (number == 0)
+            return false;
+        if (number == 1 || number == 2)
+            return true;
+        boolean isPrime = true;
+        int limit = (int) Math.sqrt(number) + 1;
+
+        for (int i = 2; i <= limit; i++) {
+            if (number % i == 0) {
+                isPrime = false;
+                break;
+            }
+        }
+        return isPrime;
 	}
 }
