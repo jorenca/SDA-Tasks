@@ -41,7 +41,9 @@ public class FileEncoder61657 implements FileEncoder {
 			else 
 			{
 				finito.write(a);
-			}}
+			}
+				i++;
+			}
 			begin.close();
 			finito.close();
 		}
@@ -58,6 +60,7 @@ public class FileEncoder61657 implements FileEncoder {
 				finito.write(key.indexOf(a));
 			}
 			else finito.write(a);
+		i++;
 		}
 		begin.close();
 		finito.close();
