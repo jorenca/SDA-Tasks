@@ -53,7 +53,7 @@ public class BookIndexer61708 implements BookIndexer {
 
 					sb.setLength(0);
 					currentPage = currentLine.substring(
-							startOfPageHeadingIndex + 9, endOfPageHeading - 1);
+							startOfPageHeadingIndex + HEADING_LENGTH_PAGE_NUMBER, endOfPageHeading - 1);
 				} else {
 					sb.append(currentLine);
 				}
