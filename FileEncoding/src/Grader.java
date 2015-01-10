@@ -25,6 +25,9 @@ public class Grader {
 
     private static List<Class<? extends FileEncoder>> getWorks() throws ClassNotFoundException {
         List<Class<? extends FileEncoder>> result = new LinkedList<Class<? extends FileEncoder>>();
+        
+        result.add(FileEncoder61717.class);
+        if(true) return result;
 
         File folder = new File("./src/");
         File[] listOfFiles = folder.listFiles();
@@ -193,10 +196,11 @@ public class Grader {
             while ((currentChar = current.read()) != -1 && (expectedChar = expected.read()) != -1) {
 
                 if (currentChar != expectedChar) {
+                	System.out.println("Mismatch: "+currentChar+ " "+expectedChar);
                     return false;
                 }
             }
-            if(current.read() != expected.read()) return false;
+            if(current.read() != expected.read()){ System.out.println("size mismatch"); return false;}
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
