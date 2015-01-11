@@ -16,13 +16,14 @@ import java.util.TreeSet;
  */
 
 public class BookIndexer61712 implements IBookIndexer {
+	private static final String NON_DEL_STR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-=";
 	private static final String IDX_TITLE = "INDEX";
 	private static final String PAGE_START = "===";
 	private static final String COMMA_SPACE = ", ";
 	private static final Integer PAGE_ST_IDX = 9;
 	private static final Character SPACE = ' ';
-	private HashSet<Character> delimiters;
 	
+	private HashSet<Character> nonDelimiters;
 	private TreeMap<String, TreeSet<Integer>> indices;
 	private HashSet<String> keywords;
 	private Integer currentPage;
@@ -30,18 +31,13 @@ public class BookIndexer61712 implements IBookIndexer {
 	public BookIndexer61712() {
 		this.indices = new TreeMap<String, TreeSet<Integer>>();
 		this.keywords = new HashSet<String>();
-		this.delimiters = new HashSet<Character>() {{
-			// Can be updated
-			add(SPACE);
-			add('.');
-			add(',');
-			add('!');
-			add('?');
-		}};
+		this.nonDelimiters = new HashSet<Character>();
+		
+		this.generateNonDelimiters();
 	}
 	
 	public void buildIndex(String bookFilePath, String[] keywords, String indexFilePath) {
-		this.keywords = new HashSet<String>(Arrays.asList(keywords));
+		this.addKeywords(keywords);
 		
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(bookFilePath));
@@ -67,13 +63,25 @@ public class BookIndexer61712 implements IBookIndexer {
 		this.saveIndicesToFile(indexFilePath);
 	}
 	
+	private void generateNonDelimiters() {
+		for (int i = 0; i < this.NON_DEL_STR.length(); i++) {
+			this.nonDelimiters.add(this.NON_DEL_STR.charAt(i));
+		}
+	}
+	
+	private void addKeywords(String[] keywords) {
+		for (String word : keywords) {
+			this.keywords.add(word.toLowerCase());
+		}
+	}
+	
 	private void analyzeLine(String line) {
 		StringBuilder word = new StringBuilder();
 		
 		for (int i = 0; i < line.length(); i++) {
 			char currentChar = line.charAt(i);
 			
-			if (!this.delimiters.contains(currentChar)) {
+			if (this.nonDelimiters.contains(currentChar)) {
 				word.append(currentChar);
 				
 				if (i == line.length() - 1) {
@@ -85,10 +93,11 @@ public class BookIndexer61712 implements IBookIndexer {
 				String strWord = word.toString().toLowerCase();
 				Boolean isWordAdded = this.addWord(strWord);
 				
-				if (!isWordAdded && strWord.equals(this.PAGE_START)) {
+				if (!isWordAdded && strWord.contains(this.PAGE_START)) {
 					StringBuilder page = new StringBuilder();
-					
-					for (int j = this.PAGE_ST_IDX; j < line.length(); j++) {
+					int startIdx = line.indexOf(this.PAGE_START) + this.PAGE_ST_IDX;
+
+					for (int j = startIdx; j < line.length(); j++) {
 						char digit = line.charAt(j);
 						
 						if (digit == this.SPACE) {
@@ -133,12 +142,12 @@ public class BookIndexer61712 implements IBookIndexer {
 		for (Map.Entry<String, TreeSet<Integer>> item : this.indices.entrySet()) {
 			fileOutput.append(item.getKey()).append(this.COMMA_SPACE);
 			
-			Integer from = -1;
-			Integer prev = -1;	
-			Integer pagesLength = item.getValue().size();
-			Integer i = 0;
+			int from = -1;
+			int prev = -1;	
+			int pagesLength = item.getValue().size();
+			int i = 0;
 
-			for (Integer page : item.getValue()) {
+			for (int page : item.getValue()) {
 				if (from == -1) {
 					from = page;
 				}
@@ -183,9 +192,9 @@ public class BookIndexer61712 implements IBookIndexer {
 		}
 	}
 	
-//	public static void main(String[] args) {
-//		BookIndexer61712 indexer = new BookIndexer61712();
-//		indexer.buildIndex("src\\book2.txt", new String[] { "lorem", "quisque", "aenean" }, "src\\index2.txt");
-//		System.out.println("Done");
-//	}
+	public static void main(String[] args) {
+		BookIndexer61712 indexer = new BookIndexer61712();
+		indexer.buildIndex("src\\book2.txt",  new String[] { "lorem", "quisque", "aenean" }, "src\\index11.txt");
+		System.out.println("Done");
+	}
 }
