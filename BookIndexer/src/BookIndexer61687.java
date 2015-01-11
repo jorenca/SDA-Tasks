@@ -15,7 +15,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BookIndexer61687 implements BookIndexer {
+public class BookIndexer61687 implements IBookIndexer {
 	public final static Pattern pat = Pattern.compile("^=== page (\\d+) ===$");
 	
 	public void buildIndex(String bookFilePath, String[] keywords, String indexFilePath) {	
