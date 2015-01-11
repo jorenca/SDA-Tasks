@@ -182,15 +182,23 @@ public class BookIndexer61738 implements IBookIndexer
             writer.write("INDEX");
             writer.newLine();
             
+            int i = 0;
             for (String keyword : keywordSet) 
             {
                 String pages;
                 if( (pages = wordMap.get(keyword)) != null )
                 {
+                   i++;
                    writer.write(keyword + ", " + FormatPages(pages));
-                   writer.newLine();     
+                   
+                   //dont add new line after the last word
+                   if( i != keywordSet.size() )
+                   {
+                	   writer.newLine();  
+                   }
                 }
             }
+          
             writer.close();
 		} 
 		catch (IOException e) 
