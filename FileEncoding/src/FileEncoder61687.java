@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 
-
 public class FileEncoder61687 implements FileEncoder{
 	
 	public void encode(String sourceFile, String destinationFile,
@@ -87,4 +86,5 @@ public class FileEncoder61687 implements FileEncoder{
         }
         return isPrime;
 	}
+>>>>>>> de095cb53bb552293ef1927f07e58599c8fa3ea1
 }
