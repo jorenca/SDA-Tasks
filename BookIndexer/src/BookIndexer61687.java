@@ -27,7 +27,7 @@ public class BookIndexer61687 implements BookIndexer {
 			List<String> lines = Files.readAllLines(Paths.get(bookFilePath), Charset.defaultCharset());
 			            for (String line : lines) {
 			                line = line.toLowerCase();
-			        		page = getPage(line);
+			                page = getPage(line);
 			        		
 			        		if (page != 0) {
 			        			stackOfPages.add(page);
@@ -49,7 +49,6 @@ public class BookIndexer61687 implements BookIndexer {
 						                    map.put(keywords[i], targetList);
 						                    targetList = new ArrayList<Integer>();
 					                    }
-				                	
 				                }
 				                
 			        		}
@@ -65,73 +64,76 @@ public class BookIndexer61687 implements BookIndexer {
 	}
 	
 	private Integer getPage(String line) {
-	    Matcher m = pat.matcher(line);
-	    String page = null;
-	    int result = 0;
-	        
-	    if(m.find()) { 
-	    	page = m.group(1);
-	    }
-	    
-	    if (page != null) {
-	    	result = Integer.parseInt(page);
-	    }
-	     
+		int result = 0;
+		if(!(line.isEmpty())) {
+		    Matcher m = pat.matcher(line);
+		    String page = null;
+		        
+		    if(m.find()) { 
+		    	page = m.group(1);
+		    }
+		    
+		    if (page != null) {
+		    	result = Integer.parseInt(page);
+		    }
+		}
 	     return result;
 	}
 		
 	private void printPages(TreeMap<String, ArrayList<Integer>> map, String[] keywords,String indexFilePath) {
-		Arrays.sort(keywords);
-		String result = "INDEX\r\n";
-		String pages = "";
-		int counter;
-		for(int i = 0; i < keywords.length; i++) {
-			counter = 0;
-			keywords[i].toLowerCase();
-			ArrayList<Integer> listOfPages = map.get(keywords[i]);
-				if(listOfPages != null) {
-					for(int j = 0; j < listOfPages.size(); j++) {
-							
-						if(j == listOfPages.size() -1) { 
-							if(counter != 0) {
-								pages = pages + ", " + listOfPages.get(j-counter) + "-" + listOfPages.get(j);
-							} else {
-								pages = pages + ", " + listOfPages.get(j);
-							}
-								continue;
-						}
-							
-						if (listOfPages.get(j+1) == listOfPages.get(j) + 1) {
-							counter++;
-						} else {
-							if(counter != 0) {
-								pages = pages + ", " + listOfPages.get(j-counter) + "-" + listOfPages.get(j);
-							} else {
-								pages = pages + ", " + listOfPages.get(j);
-							}
-						}
-					}
-					result = result + keywords[i] + pages + "\r\n";
-					pages = "";
-				}
-				
-		}
+			String result = "INDEX\r\n";
+			String pages = "";
+			int counter;
+			Writer writer = null;
 			
-		Writer writer = null;
-		try {
-		    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(indexFilePath), "utf-8"));
-		    writer.write(result);
-		} catch (IOException ex) {
-			} finally {
-			   try {
-				   writer.close();
-			   } catch (Exception ex) {}
-			}
-	
+			if(!(map.isEmpty())) {
+				Arrays.sort(keywords);
+				for(int i = 0; i < keywords.length; i++) {
+					counter = 0;
+					keywords[i].toLowerCase();
+					ArrayList<Integer> listOfPages = map.get(keywords[i]);
+						if(listOfPages != null) {
+							for(int j = 0; j < listOfPages.size(); j++) {
+									
+								if(j == listOfPages.size() -1) { 
+									if(counter != 0) {
+										pages = pages + ", " + listOfPages.get(j-counter) + "-" + listOfPages.get(j);
+									} else {
+										pages = pages + ", " + listOfPages.get(j);
+									}
+										continue;
+								}
+									
+								if (listOfPages.get(j+1) == listOfPages.get(j) + 1) {
+									counter++;
+								} else {
+									if(counter != 0) {
+										pages = pages + ", " + listOfPages.get(j-counter) + "-" + listOfPages.get(j);
+									} else {
+										pages = pages + ", " + listOfPages.get(j);
+									}
+								}
+							}
+							result = result + keywords[i] + pages + "\r\n";
+							pages = "";
+						}
+						
+				}	
+			} 
+			try {
+			    writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(indexFilePath), "utf-8"));
+			    writer.write(result);
+			} catch (IOException ex) {
+				} finally {
+				   try {
+					   writer.close();
+				   } catch (Exception ex) {}
+				}
 	}
 
 	private boolean containsWord(String line, String keyword) {
-		Pattern p = Pattern.compile("(\\s|^)"+keyword+"(\\s|$|\\.|\\,|\\!|\\?|\\;|\\:)");
+		line = " " + line;
+		Pattern p = Pattern.compile("[^A-Za-z0-9-]"+keyword+"[^A-Za-z0-9-]");
 		Matcher matcher = p.matcher(line);
 		if(matcher.find()) {
 			return true;
