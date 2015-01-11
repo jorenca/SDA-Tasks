@@ -85,10 +85,11 @@ public class BookIndexer61712 implements IBookIndexer {
 				String strWord = word.toString().toLowerCase();
 				Boolean isWordAdded = this.addWord(strWord);
 				
-				if (!isWordAdded && strWord.equals(this.PAGE_START)) {
+				if (!isWordAdded && strWord.contains(this.PAGE_START)) {
 					StringBuilder page = new StringBuilder();
+					int startIdx = strWord.indexOf(this.PAGE_START) + this.PAGE_ST_IDX;
 					
-					for (int j = this.PAGE_ST_IDX; j < line.length(); j++) {
+					for (int j = startIdx; j < line.length(); j++) {
 						char digit = line.charAt(j);
 						
 						if (digit == this.SPACE) {
@@ -133,12 +134,12 @@ public class BookIndexer61712 implements IBookIndexer {
 		for (Map.Entry<String, TreeSet<Integer>> item : this.indices.entrySet()) {
 			fileOutput.append(item.getKey()).append(this.COMMA_SPACE);
 			
-			Integer from = -1;
-			Integer prev = -1;	
-			Integer pagesLength = item.getValue().size();
-			Integer i = 0;
+			int from = -1;
+			int prev = -1;	
+			int pagesLength = item.getValue().size();
+			int i = 0;
 
-			for (Integer page : item.getValue()) {
+			for (int page : item.getValue()) {
 				if (from == -1) {
 					from = page;
 				}
@@ -185,7 +186,7 @@ public class BookIndexer61712 implements IBookIndexer {
 	
 //	public static void main(String[] args) {
 //		BookIndexer61712 indexer = new BookIndexer61712();
-//		indexer.buildIndex("src\\book2.txt", new String[] { "lorem", "quisque", "aenean" }, "src\\index2.txt");
+//		indexer.buildIndex("src\\book4.txt",  new String[] { "miracle" }, "src\\index4.txt");
 //		System.out.println("Done");
 //	}
 }
