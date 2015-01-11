@@ -16,13 +16,14 @@ import java.util.TreeSet;
  */
 
 public class BookIndexer61712 implements IBookIndexer {
+	private static final String DELIMITERS_STR = " !#$%&()*+,./:;<>?@[]^_`{|}~\\\"\'";
 	private static final String IDX_TITLE = "INDEX";
 	private static final String PAGE_START = "===";
 	private static final String COMMA_SPACE = ", ";
 	private static final Integer PAGE_ST_IDX = 9;
 	private static final Character SPACE = ' ';
-	private HashSet<Character> delimiters;
 	
+	private HashSet<Character> delimiters;
 	private TreeMap<String, TreeSet<Integer>> indices;
 	private HashSet<String> keywords;
 	private Integer currentPage;
@@ -30,18 +31,13 @@ public class BookIndexer61712 implements IBookIndexer {
 	public BookIndexer61712() {
 		this.indices = new TreeMap<String, TreeSet<Integer>>();
 		this.keywords = new HashSet<String>();
-		this.delimiters = new HashSet<Character>() {{
-			// Can be updated
-			add(SPACE);
-			add('.');
-			add(',');
-			add('!');
-			add('?');
-		}};
+		this.delimiters = new HashSet<Character>();
+		
+		this.generateDelimiters();
 	}
 	
 	public void buildIndex(String bookFilePath, String[] keywords, String indexFilePath) {
-		this.keywords = new HashSet<String>(Arrays.asList(keywords));
+		this.addKeywords(keywords);
 		
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(bookFilePath));
@@ -65,6 +61,18 @@ public class BookIndexer61712 implements IBookIndexer {
 		}
 		
 		this.saveIndicesToFile(indexFilePath);
+	}
+	
+	private void generateDelimiters() {
+		for (int i = 0; i < this.DELIMITERS_STR.length(); i++) {
+			this.delimiters.add(this.DELIMITERS_STR.charAt(i));
+		}
+	}
+	
+	private void addKeywords(String[] keywords) {
+		for (String word : keywords) {
+			this.keywords.add(word.toLowerCase());
+		}
 	}
 	
 	private void analyzeLine(String line) {
@@ -184,9 +192,9 @@ public class BookIndexer61712 implements IBookIndexer {
 		}
 	}
 	
-//	public static void main(String[] args) {
-//		BookIndexer61712 indexer = new BookIndexer61712();
-//		indexer.buildIndex("src\\book4.txt",  new String[] { "miracle" }, "src\\index4.txt");
-//		System.out.println("Done");
-//	}
+	public static void main(String[] args) {
+		BookIndexer61712 indexer = new BookIndexer61712();
+		indexer.buildIndex("src\\book4.txt",  new String[] { "miracle" }, "src\\index8.txt");
+		System.out.println("Done");
+	}
 }
