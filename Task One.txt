@@ -1,0 +1,43 @@
+NOTE! NOTE! NOTE!
+This task description is OUTDATED.
+Reffer to 
+https://github.com/NikolaDimitroff/DSA-Demo-Library/blob/master/homeworks/hw1.md
+for the up-to-date description.
+NOTE! NOTE! NOTE!
+
+
+
+= File Encription =
+
+You are given this interface:
+
+https://github.com/jorenca/SDA-Tasks/blob/master/FileEncoding/src/FileEncoder.java
+
+You have to implement it as a coder class,
+Your class should be called Coder<FACULTY_NUMBER>.
+For example, if your FN is 12345, your class should be called Coder12345.
+
+
+You are given a path to a file which has to be encoded.
+You are also given a path where to write the resulting file.
+Finally, you are given a list of 256 bytes, each different from the others.
+The encryption algorithm is as follows:
+* Let the first byte in the input file has the value "23".
+* The encoded representation of this byte is the value which is on the 23-rd position
+of the key list.
+* Let the second byte has the value "120"
+* The second byte of the resulting encoded file should be equal to the value in the key
+list at position 120.
+* This is done for each byte in the file ONLY IF THE POSITION IS A PRIME NUMBER OR 1.
+* If the position is not a prime number, the resulting byte is the same (equals to 
+that in the input file.
+
+* The first, second, third, fifth, etc... byte in the input file is replaced.
+* The fourth, sixth, eighth, etc. byte in the input file is just used directly.
+Your class should be able to encode files in this manner and decode them accordingly.
+
+The faster - the better.
+
+NOTE!
+A file will be no longer than 300kb.
+NOTE!

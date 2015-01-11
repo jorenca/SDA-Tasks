@@ -1,0 +1,141 @@
+Adding class FileEncoder61657 for grading.
+Adding class FileEncoder61662 for grading.
+Adding class FileEncoder61668 for grading.
+Adding class FileEncoder61672 for grading.
+Adding class FileEncoder61673 for grading.
+Adding class FileEncoder61677 for grading.
+Adding class FileEncoder61682 for grading.
+Adding class FileEncoder61683 for grading.
+Adding class FileEncoder61687 for grading.
+Adding class FileEncoder61692 for grading.
+Adding class FileEncoder61702 for grading.
+Adding class FileEncoder61707 for grading.
+Adding class FileEncoder61708 for grading.
+Adding class FileEncoder61712 for grading.
+Adding class FileEncoder61713 for grading.
+Adding class FileEncoder61717 for grading.
+Adding class FileEncoder61718 for grading.
+Adding class FileEncoder61722 for grading.
+Adding class FileEncoder61723 for grading.
+Adding class FileEncoder61727 for grading.
+Adding class FileEncoder61733 for grading.
+Adding class FileEncoder61738 for grading.
+Adding class FileEncoder61744 for grading.
+Adding class FileEncoder61753 for grading.
+Adding class FileEncoder61755 for grading.
+
+
+=== Encoding in1.jpg ===
+Author result: 18ms
+FileEncoder61657 result: Incorrect. (time 592ms)
+FileEncoder61662 result: Incorrect. (time 33ms)
+FileEncoder61668 result: 0,00615 (time 2900ms)
+FileEncoder61672 result: 0,01806 (time 988ms)
+FileEncoder61673 result: 0,02314 (time 771ms)
+FileEncoder61677 result: Incorrect. (time 971ms)
+FileEncoder61682 result: 0,02247 (time 794ms)
+FileEncoder61683 result: 0,00663 (time 2691ms)
+FileEncoder61687 result: Incorrect. (time 20ms)
+FileEncoder61692 result: 0,78419 (time 23ms)
+FileEncoder61702 result: 1,15194 (time 15ms)
+FileEncoder61707 result: 0,78291 (time 23ms)
+FileEncoder61708 result: 0,02011 (time 887ms)
+FileEncoder61712 result: Incorrect. (time 45ms)
+FileEncoder61713 result: Incorrect. (time 17ms)
+FileEncoder61717 result: Incorrect. (time 232ms)
+FileEncoder61718 result: 0,02071 (time 861ms)
+FileEncoder61722 result: 0,01809 (time 986ms)
+FileEncoder61723 result: 0,01019 (time 1750ms)
+FileEncoder61727 result: 0,03743 (time 476ms)
+FileEncoder61733 result: 0,03086 (time 578ms)
+FileEncoder61738 result: Incorrect. (time 54ms)
+FileEncoder61744 result: 0,02049 (time 871ms)
+FileEncoder61753 result: 0,01726 (time 1033ms)
+FileEncoder61755 result: Incorrect. (time 24ms)
+
+
+=== Decoding in1.jpg ===
+Author result: 17ms
+FileEncoder61657 result: Incorrect. (time 842ms)
+FileEncoder61662 result: Incorrect. (time 64ms)
+FileEncoder61668 result: 0,00598 (time 2833ms)
+FileEncoder61672 result: 0,01353 (time 1252ms)
+FileEncoder61673 result: Incorrect. (time 964ms)
+FileEncoder61677 result: Incorrect. (time 997ms)
+FileEncoder61682 result: 0,02022 (time 838ms)
+FileEncoder61683 result: 0,00625 (time 2710ms)
+FileEncoder61687 result: Incorrect. (time 61ms)
+FileEncoder61692 result: 0,2591 (time 65ms)
+FileEncoder61702 result: Incorrect. (time 14ms)
+FileEncoder61707 result: 0,24932 (time 68ms)
+FileEncoder61708 result: 0,01912 (time 886ms)
+FileEncoder61712 result: Incorrect. (time 58ms)
+FileEncoder61713 result: Incorrect. (time 17ms)
+FileEncoder61717 result: Incorrect. (time 333ms)
+FileEncoder61718 result: 0,01736 (time 976ms)
+FileEncoder61722 result: Incorrect. (time 3ms)
+FileEncoder61723 result: Incorrect. (time 1687ms)
+FileEncoder61727 result: Incorrect. (time 530ms)
+FileEncoder61733 result: 0,0179 (time 947ms)
+FileEncoder61738 result: Incorrect. (time 91ms)
+FileEncoder61744 result: 0,02244 (time 755ms)
+FileEncoder61753 result: Incorrect. (time 1064ms)
+FileEncoder61755 result: Incorrect. (time 19ms)
+
+
+=== Encoding in5.jpg ===
+Author result: 19ms
+FileEncoder61657 result: Incorrect. (time 8978ms)
+FileEncoder61662 result: Incorrect. (time 232ms)
+FileEncoder61668 result: 0,00079 (time 24291ms)
+FileEncoder61672 result: 0,00183 (time 10462ms)
+FileEncoder61673 result: 0,0022 (time 8694ms)
+FileEncoder61677 result: Incorrect. (time 94679ms)
+FileEncoder61682 result: 0,00209 (time 9158ms)
+FileEncoder61683 result: 0,00077 (time 24917ms)
+FileEncoder61687 result: Incorrect. (time 67ms)
+FileEncoder61692 result: 0,13747 (time 139ms)
+FileEncoder61702 result: 0,92641 (time 21ms)
+FileEncoder61707 result: 0,11161 (time 171ms)
+FileEncoder61708 result: 0,00215 (time 8900ms)
+FileEncoder61712 result: Incorrect. (time 57ms)
+FileEncoder61713 result: Incorrect. (time 34ms)
+FileEncoder61717 result: 0,00681 (time 2808ms)
+FileEncoder61718 result: 0,00213 (time 8986ms)
+FileEncoder61722 result: 0,00215 (time 8913ms)
+FileEncoder61723 result: 0,00013 (time 150837ms)
+FileEncoder61727 result: 0,00214 (time 8922ms)
+FileEncoder61733 result: 0,00213 (time 8989ms)
+FileEncoder61738 result: Incorrect. (time 263ms)
+FileEncoder61744 result: 0,00216 (time 8863ms)
+FileEncoder61753 result: 0,00213 (time 8973ms)
+FileEncoder61755 result: Incorrect. (time 121ms)
+
+
+
+=== FINAL RESULTS ===
+FileEncoder61657: 0
+FileEncoder61662: 0
+FileEncoder61668: 0,00431
+FileEncoder61672: 0,01114
+FileEncoder61673: 0,00845
+FileEncoder61677: 0
+FileEncoder61682: 0,01492
+FileEncoder61683: 0,00455
+FileEncoder61687: 0
+FileEncoder61692: 0,39359
+FileEncoder61702: 0,69278
+FileEncoder61707: 0,38128
+FileEncoder61708: 0,01379
+FileEncoder61712: 0
+FileEncoder61713: 0
+FileEncoder61717: 0,00227
+FileEncoder61718: 0,0134
+FileEncoder61722: 0,00675
+FileEncoder61723: 0,00344
+FileEncoder61727: 0,01319
+FileEncoder61733: 0,01696
+FileEncoder61738: 0
+FileEncoder61744: 0,01503
+FileEncoder61753: 0,00646
+FileEncoder61755: 0

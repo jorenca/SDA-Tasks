@@ -1,0 +1,32 @@
+First of all, sign up for github. Use this:
+https://github.com/
+
+Then download git for your computer and install it.
+Any questions you have regarding git can be answered by Google.
+Heres a small guide however.
+
+Once you're done with installing git, create a new Repository in your github.
+You can call it whatever you want (keep in mind that this is going to be
+the name of the folder where your project files are going to be stored)
+Be sure to select the "Create README.MD" checkbox!
+
+Then on your computer, open the folder where you store your projects.
+Right click and choose Git Bash from the dialog (its gonna be in the middle).
+
+In git bash type:
+git clone https://github.com/<YOUR USERNAME>/<YOUR REPOSITORY>
+
+In my case for this repository, I used:
+git clone https://github.com/jorenca/SDA-Tasks
+
+
+After you're done with this, you can start creating and editing files in the
+folder that was created by git clone (my folder was named SDA-Tasks).
+
+When you want to upload (commit) your changes to github, do this in the git bash:
+git add -A (this adds all files to the commit)
+git commit -m "your message about this commit"
+git push
+
+Then git will ask you for your username and password on github.
+Type them in and you should be all set!
