@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-public class BookIndexer61708 implements BookIndexer {
+public class BookIndexer61708 implements IBookIndexer {
 
 	private Map<String, List<Integer>> index;
 	private Map<Integer, String> pages;
