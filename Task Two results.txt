@@ -1,0 +1,115 @@
+Adding class BookIndexer61658 for grading.
+Adding class BookIndexer61673 for grading.
+Adding class BookIndexer61677 for grading.
+Adding class BookIndexer61682 for grading.
+Adding class BookIndexer61687 for grading.
+Adding class BookIndexer61692 for grading.
+Adding class BookIndexer61707 for grading.
+Adding class BookIndexer61708 for grading.
+Adding class BookIndexer61712 for grading.
+Adding class BookIndexer61718 for grading.
+Adding class BookIndexer61723 for grading.
+Adding class BookIndexer61738 for grading.
+
+
+=== Testing moby-dick.txt ===
+Author result: 382ms
+BookIndexer61658 result: Incorrect. (time 543ms)
+BookIndexer61673 result: 2,5147 (time 152ms)
+BookIndexer61677 result: Incorrect. (time 246ms)
+BookIndexer61682 result: Incorrect. (time 853ms)
+BookIndexer61687 result: Incorrect. (time 280ms)
+BookIndexer61692 result: Incorrect. (time 340ms)
+BookIndexer61707 result: Incorrect. (time 182ms)
+BookIndexer61708 result: Incorrect. (time 530ms)
+BookIndexer61712 result: Incorrect. (time 164ms)
+BookIndexer61718 result: Incorrect. (time 310ms)
+BookIndexer61723 result: Incorrect. (time 182ms)
+BookIndexer61738 result: Incorrect. (time 276ms)
+
+
+=== Testing hipster-lorem-ipsum.txt ===
+Author result: 74ms
+BookIndexer61658 result: Incorrect. (time 132ms)
+BookIndexer61673 result: Incorrect. (time 40ms)
+BookIndexer61677 result: Incorrect. (time 910ms)
+BookIndexer61682 result: Incorrect. (time 584ms)
+BookIndexer61687 result: Incorrect. (time 298ms)
+BookIndexer61692 result: Incorrect. (time 40ms)
+BookIndexer61707 result: Incorrect. (time 44ms)
+BookIndexer61708 result: Incorrect. (time 626ms)
+BookIndexer61712 result: Incorrect. (time 171ms)
+BookIndexer61718 result: Threw an exception.
+BookIndexer61723 result: Threw an exception.
+BookIndexer61738 result: Incorrect. (time 50ms)
+
+
+=== Testing turing.txt ===
+Author result: 99ms
+BookIndexer61658 result: Incorrect. (time 57ms)
+BookIndexer61673 result: Incorrect. (time 141ms)
+BookIndexer61677 result: Incorrect. (time 277ms)
+BookIndexer61682 result: Incorrect. (time 399ms)
+BookIndexer61687 result: Incorrect. (time 262ms)
+BookIndexer61692 result: Incorrect. (time 54ms)
+BookIndexer61707 result: Incorrect. (time 52ms)
+BookIndexer61708 result: Incorrect. (time 490ms)
+BookIndexer61712 result: Incorrect. (time 14ms)
+BookIndexer61718 result: Incorrect. (time 46ms)
+BookIndexer61723 result: Threw an exception.
+BookIndexer61738 result: Incorrect. (time 25ms)
+
+
+=== Testing cry-me-a-river.txt ===
+Author result: 31ms
+BookIndexer61658 result: Incorrect. (time 26ms)
+BookIndexer61673 result: Incorrect. (time 24ms)
+BookIndexer61677 result: Incorrect. (time 32ms)
+BookIndexer61682 result: Incorrect. (time 66ms)
+BookIndexer61687 result: Incorrect. (time 23ms)
+BookIndexer61692 result: Incorrect. (time 42ms)
+BookIndexer61707 result: Incorrect. (time 29ms)
+BookIndexer61708 result: Incorrect. (time 156ms)
+BookIndexer61712 result: Incorrect. (time 12ms)
+BookIndexer61718 result: Incorrect. (time 31ms)
+BookIndexer61723 result: Incorrect. (time 13ms)
+BookIndexer61738 result: Incorrect. (time 23ms)
+
+
+=== Testing bohemian-rhapsody.txt ===
+Author result: 11ms
+BookIndexer61658 result: Incorrect. (time 14ms)
+BookIndexer61673 result: Incorrect. (time 20ms)
+BookIndexer61677 result: Incorrect. (time 2ms)
+java.io.FileNotFoundException: graded.out (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(Unknown Source)
+	at java.io.FileInputStream.<init>(Unknown Source)
+	at Grader.readAndCompareFiles(Grader.java:182)
+	at Grader.gradeAllAgainst(Grader.java:101)
+	at Grader.main(Grader.java:147)
+BookIndexer61682 result: Incorrect. (time 41ms)
+BookIndexer61687 result: Incorrect. (time 10ms)
+BookIndexer61692 result: Incorrect. (time 17ms)
+BookIndexer61707 result: Incorrect. (time 8ms)
+BookIndexer61708 result: Incorrect. (time 76ms)
+BookIndexer61712 result: Incorrect. (time 24ms)
+BookIndexer61718 result: Incorrect. (time 11ms)
+BookIndexer61723 result: Incorrect. (time 21ms)
+BookIndexer61738 result: Incorrect. (time 9ms)
+
+
+
+=== FINAL RESULTS ===
+BookIndexer61658: 0
+BookIndexer61673: 0,50294
+BookIndexer61677: 0
+BookIndexer61682: 0
+BookIndexer61687: 0
+BookIndexer61692: 0
+BookIndexer61707: 0
+BookIndexer61708: 0
+BookIndexer61712: 0
+BookIndexer61718: 0
+BookIndexer61723: 0
+BookIndexer61738: 0

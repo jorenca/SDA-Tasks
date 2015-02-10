@@ -66,7 +66,7 @@ public class Grader {
         String authorOutFile = "author.out";
         String gradedOutFile = "graded.out";
 
-        File aoutf = new File(gradedOutFile);
+        File aoutf = new File(authorOutFile);
     	aoutf.delete();
     	long authorTime=0;
     	try {
@@ -87,8 +87,10 @@ public class Grader {
         	long workTime = 0;
             try {
                 long workStart = System.nanoTime();
-            	work.buildIndex(bookFile, keywords, gradedOutFile);
+            	work.buildIndex(bookFile, keywords, gradedOutFile/*+instancesToBeGraded.indexOf(work)*/);
                 workTime = System.nanoTime() - workStart;
+                // FIXME
+                //Thread.sleep(1000);
             } catch (Throwable t) {
                 workTime = -1;
             }
@@ -183,12 +185,12 @@ public class Grader {
             int expectedChar;
             while ((currentChar = current.read()) != -1 && (expectedChar = expected.read()) != -1) {
                 // ignore \r as this causes difference in the output
-                if (currentChar == '\r')
+                while (currentChar == '\r')
                     currentChar = current.read();
-                if (expectedChar == '\r')
+                while (expectedChar == '\r')
                     expectedChar = expected.read();
 
-                if (currentChar != expectedChar) {
+                if (!uglyCaseSensitivityHack(currentChar, expectedChar)) {
                     return false;
                 }
             }
@@ -205,5 +207,19 @@ public class Grader {
             }
         }
         return true;
+    }
+    
+    static
+    {
+    	//test
+    	for(char a='a'; false&&a<='z'; a++)
+    		for(char b='A'; b<='Z'; b++)
+    			System.out.println(uglyCaseSensitivityHack(a, b));
+    }
+    
+    private static boolean uglyCaseSensitivityHack(int a, int b)
+    {
+    	if((a >= 'a' && a<='z') || (a>='A'&&a<='Z'))
+    	return (a <= 'Z' ? a - 'A' + 'a' : a) == (b <= 'Z' ? b - 'A' + 'a' : b); return a == b;
     }
 }
